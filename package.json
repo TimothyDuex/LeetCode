@@ -5,9 +5,9 @@
   "scripts": {
     "build": "tsc"
   },
-  "dependencies": {},
   "devDependencies": {
-    "typescript": "^5.5.3"
+    "globals": "^15.13.0",
+    "typescript": "^5.8.3"
   },
   "private": true,
   "keywords": [],
