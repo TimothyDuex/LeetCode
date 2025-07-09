@@ -6,23 +6,25 @@
  * @param magazine input string two
  */
 function canConstruct(ransomNote: string, magazine: string): boolean {
-    // Create Single Hashmap
-    // Add 1 if character from magazine, subtract 1 if from note
-    let map = new Map;
-    map = stringToMap(map, magazine, 1);
-    map = stringToMap(map, ransomNote, -1);
-    for (const [key, value] of map) {
-        if (value < 0) {
+    const magMap: Map<string, number> = new Map();
+    for (let c of magazine) {
+        if (magMap.has(c)) {
+            magMap.set(c, magMap.get(c)! + 1);
+        } else {
+            magMap.set(c, 1);
+        }
+    }
+    for (let c of ransomNote) {
+        if (magMap.has(c)) {
+            const numOfLetter = magMap.get(c)!;
+            if (numOfLetter <= 0) {
+                return false;
+            } else {
+                magMap.set(c, numOfLetter - 1);
+            }
+        } else {
             return false;
         }
     }
-
     return true;
 };
-
-function stringToMap(map: Map<string, number>, input: string, toAdd: number): Map<string, number> {
-    for (let char of input) {
-        map.set(char, (map.get(char) || 0) + toAdd);
-    }
-    return map;
-}

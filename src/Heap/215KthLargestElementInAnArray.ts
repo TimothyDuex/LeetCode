@@ -1,3 +1,5 @@
+import { MaxPriorityQueue } from "@datastructures-js/priority-queue";
+
 /**
  * Return the kth largest element in the array.
  *
@@ -10,15 +12,9 @@
  * @param k integer
  */
 function findKthLargest(nums: number[], k: number): number {
-    const minHeap = new Heap({
-        compareFn: (a: number, b: number) => a < b
-    });
-
-    for (let num of nums) {
-        minHeap.push(num);
+    const maxQueue = MaxPriorityQueue.fromArray<number>(nums);
+    for (let i = 1; i < k; i++) {
+        maxQueue.dequeue();
     }
-    while(minHeap.size() > k) {
-        minHeap.poll();
-    }
-    return minHeap.poll()!;
+    return maxQueue.dequeue()!;
 };
